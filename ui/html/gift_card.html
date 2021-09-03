@@ -1,0 +1,58 @@
+{{define "giftcard"}}
+{{template "header"}}
+{{template "nav"}}
+
+<main class="jumbotron">
+    <div class="text-center p-5">
+        <h1>Gift Card</h1>
+        <div class="my-2">
+            {{if eq .GiftCard.State "PENDING"}}
+                <a class="btn btn-primary mb-1" href="/giftcards/{{.GiftCard.Id}}/activate">Activate</a>
+            {{else if eq .GiftCard.State "ACTIVE"}}
+                <a class="btn btn-primary mb-1" href="/giftcards/{{.GiftCard.Id}}/deactivate">Deactivate</a>
+                <a class="btn btn-primary mb-1" href="/giftcards/{{.GiftCard.Id}}/load">Load Balance</a>
+            {{end}}
+            {{if not (eq .GiftCard.State "DEACTIVATED")}}
+                <a class="btn btn-primary mb-1" href="/giftcards/{{.GiftCard.Id}}/send">Send to a customer</a>
+            {{end}}
+        </div>
+        <div class="my-2"><strong>ID:</strong> {{ .GiftCard.Id }}</div>
+        <div class="my-2"><strong>Type:</strong> {{ .GiftCard.Type }}</div>
+        <div class="my-2"><strong>Gan Source:</strong> {{ .GiftCard.GanSource }}</div>
+        <div class="my-2"><strong>State:</strong> {{ .GiftCard.State }}</div>
+        <div class="my-2"><strong>Amount:</strong> {{ .GiftCard.BalanceMoney.Amount }}</div>
+        <div class="my-2"><strong>Currency:</strong> {{ .GiftCard.BalanceMoney.Currency }}</div>
+        <div class="my-2"><strong>Created At:</strong> {{ .GiftCard.CreatedAt }}</div>
+        {{if .GiftCard.CustomerIds}}
+        <div class="my-2">
+            <strong>Customers Ids: </strong>
+            {{range .GiftCard.CustomerIds}}
+                <div>{{.}}</div>
+            {{end}}
+        </div>
+        {{end}}
+        {{if .GiftCardActivities}}
+        <div>
+            <strong>Activities: </strong>
+            {{range .GiftCardActivities}}
+                <div class="mb-4">
+                    <div><strong>Type:</strong>{{.Type}}</div>
+                    {{if .ActivateActivityDetails}}
+                        <div><strong>Amount:</strong> {{.ActivateActivityDetails.AmountMoney.Amount}}</div>
+                        <div><strong>Currency:</strong> {{.ActivateActivityDetails.AmountMoney.Currency}}</div>
+                    {{end}}
+                    {{if .LoadActivityDetails}}
+                        <div><strong>Amount:</strong> {{.LoadActivityDetails.AmountMoney.Amount}}</div>
+                        <div><strong>Currency:</strong> {{.LoadActivityDetails.AmountMoney.Currency}}</div>
+                    {{end}}
+                    {{if .DeactivateActivityDetails}}
+                        <div><strong>Reason:</strong> {{.DeactivateActivityDetails.Reason}}</div>
+                    {{end}}
+                    <div><strong>Created At:</strong>{{.CreatedAt}}</div>
+                </div>
+            {{end}}
+        </div>
+        {{end}}
+     </div>
+</main>
+{{end}}

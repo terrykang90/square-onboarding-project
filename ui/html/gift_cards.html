@@ -1,0 +1,76 @@
+{{define "giftcards"}}
+{{template "header"}}
+{{template "nav"}}
+
+<main class="jumbotron">
+    <div class="text-center p-5">
+     <h1>List of Gift Cards {{ if .Customer }} Assigned to {{ .Customer.GivenName }} {{end}}</h1>
+     <div class="d-flex justify-content-between">
+      <select
+          class="form-select"
+          onchange="navigateToGiftCards(this.options[this.selectedIndex].value)"
+      >
+          <option {{if not .SelectedGiftCardState}}selected{{end}}>Select State</option>
+          <option value="ACTIVE" {{if eq .SelectedGiftCardState "ACTIVE"}}selected{{end}}>ACTIVE</option>
+          <option value="DEACTIVATED" {{if eq .SelectedGiftCardState "DEACTIVATED"}}selected{{end}}>DEACTIVATED</option>
+          <option value="PENDING" {{if eq .SelectedGiftCardState "PENDING"}}selected{{end}}>PENDING</option>
+      </select>
+      <form method="POST">
+        <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+        <button type="submit" class="btn btn-primary">Create a gift card</button>
+      </form>
+     </div>
+     <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Type</th>
+            <th scope="col">Gan Source</th>
+            <th scope="col">State</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Currency</th>
+            <th scope="col">Created At</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range $i, $gift_card := .GiftCards}}
+          <tr>
+            <th scope="row" style="vertical-align: middle;">{{ add $i 1 }}</th>
+            <td style="vertical-align: middle;">{{ .Id }}</td>
+            <td style="vertical-align: middle;">{{ .Type }}</td>
+            <td style="vertical-align: middle;">{{ .GanSource }}</td>
+            <td style="vertical-align: middle;">{{ .State }}</td>
+            <td style="vertical-align: middle;">{{ .BalanceMoney.Amount }}</td>
+            <td style="vertical-align: middle;">{{ .BalanceMoney.Currency }}</td>
+            <td style="vertical-align: middle;">{{ .CreatedAt }}</td>
+            <td style="display:flex; flex-direction: column;">
+                {{if eq .State "PENDING"}}
+                    <a class="btn btn-primary mb-1" href="/giftcards/{{.Id}}/activate">Activate</a>
+                {{else if eq .State "ACTIVE"}}
+                    <a class="btn btn-primary mb-1" href="/giftcards/{{.Id}}/deactivate">Deactivate</a>
+                    <a class="btn btn-primary mb-1" href="/giftcards/{{.Id}}/load">Load Balance</a>
+                {{end}}
+                {{if not (eq .State "DEACTIVATED")}}
+                    <a class="btn btn-primary mb-1" href="/giftcards/{{.Id}}/send">Send to a customer</a>
+                {{end}}
+                <a class="btn btn-primary" href="/giftcards/{{.Id}}">View detail</a>
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+     </div>
+</main>
+<script>
+    function navigateToGiftCards(state) {
+        if (!state) {
+            return false;
+        }
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.set('state', state)
+        window.location = `/giftcards?${urlParams.toString()}`;
+    }
+</script>
+{{end}}

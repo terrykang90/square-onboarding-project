@@ -1,0 +1,26 @@
+{{define "activate_gift_card_form"}}
+{{template "header"}}
+<main class="jumbotron">
+    <div class="p-5">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="customerId" class="form-label">Amount</label>
+                <input type="text" id="customerId" name="amount" class="form-control" placeholder="Enter amount" required>
+            </div>
+            <div class="mb-3">
+                <label for="currency" class="form-label">Currency</label>
+                <select
+                    id="currency"
+                    class="form-select"
+                    name="currency"
+                >
+                    <option selected>Select Currency</option>
+                    <option value="CAD">CAD</option>
+                </select>
+            </div>
+            <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+{{end}}

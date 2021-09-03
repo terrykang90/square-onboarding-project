@@ -1,0 +1,24 @@
+{{define "deactivate_gift_card_form"}}
+{{template "header"}}
+<main class="jumbotron">
+    <div class="p-5">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="customerId" class="form-label">Reason</label>
+                <select
+                    class="form-select"
+                    name="reason"
+                >
+                    <option selected>Select Reason</option>
+                    <option value="SUSPICIOUS_ACTIVITY">SUSPICIOUS ACTIVITY</option>
+                    <!-- The following reasons don't work for some reason. -->
+                    <!-- <option value="UNKNOWN_REASON">UNKNOWN REASON</option> -->
+                    <!-- <option value="CHARGEBACK_DEACTIVATE">CHARGEBACK DEACTIVATE</option> -->
+                </select>
+            </div>
+            <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+{{end}}

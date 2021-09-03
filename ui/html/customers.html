@@ -1,0 +1,36 @@
+{{define "customers"}}
+{{template "header"}}
+{{template "nav"}}
+
+<main class="jumbotron">
+     <div class="text-center p-5">
+     <h1>List of Customers</h1>
+     <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email address</th>
+            <th scope="col">Phone number</th>
+            <th scope="col">Created At</th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          {{range $i, $customer := .Customers}}
+          <tr>
+            <th scope="row">{{ add $i 1 }}</th>
+            <td>{{ .GivenName }}</td>
+            <td>{{ .EmailAddress }}</td>
+            <td>{{ .PhoneNumber }}</td>
+            <td>{{ .CreatedAt }}</td>
+            <td>
+                <a class="btn btn-primary" href="/giftcards?customer_id={{.Id}}">View Gift Cards</a>
+            </td>
+          </tr>
+          {{end}}
+        </tbody>
+      </table>
+     </div>
+</main>
+{{end}}

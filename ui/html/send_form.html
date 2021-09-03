@@ -1,0 +1,15 @@
+{{define "send_gift_card_form"}}
+{{template "header"}}
+<main class="jumbotron">
+    <div class="p-5">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="customerId" class="form-label">Customer ID</label>
+                <input type="text" id="customerId" name="customer_id" class="form-control" placeholder="Enter customer id" required>
+            </div>
+            <input type='hidden' name='csrf_token' value='{{.CSRFToken}}'>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</main>
+{{end}}

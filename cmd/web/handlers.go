@@ -232,18 +232,18 @@ func (app *application) sendAGiftCard(w http.ResponseWriter, r *http.Request) {
 
 func (app *application) activateAGiftCard(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	r.Form.Set("type", "TEST")
+	r.Form.Set("type", "ACTIVATE")
 	app.createAGiftCardActivity(w, r)
 }
 
 func (app *application) deactivateAGiftCard(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	r.Form.Set("type", "TEST")
+	r.Form.Set("type", "DEACTIVATE")
 	app.createAGiftCardActivity(w, r)
 }
 
 func (app *application) loadAGiftCard(w http.ResponseWriter, r *http.Request) {
 	r.ParseForm()
-	r.Form.Set("type", "TEST")
+	r.Form.Set("type", "LOAD")
 	app.createAGiftCardActivity(w, r)
 }

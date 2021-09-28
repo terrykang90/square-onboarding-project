@@ -230,7 +230,7 @@ func (app *application) sendAGiftCard(w http.ResponseWriter, r *http.Request) {
 	http.Redirect(w, r, fmt.Sprintf("/giftcards/%s", gift_card_id), http.StatusFound)
 }
 
-func (app *application) activateAGiftCard(w http.ResponseWriter, r *http.Request) {
+func (app *application) activateAGiftCard(w http.ResponseWriter, rs *http.Request) {
 	r.ParseForm()
 	r.Form.Set("type", "TEST")
 	app.createAGiftCardActivity(w, r)

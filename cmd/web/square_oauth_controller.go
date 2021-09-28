@@ -24,7 +24,7 @@ func NewSquareOauthController() *squareOauthController {
 			RedirectURL:  "http://localhost:8000/oauth/square/callback",
 			ClientID:     clientId,
 			ClientSecret: clientSecret,
-			Scopes:       []string{"CUSTOMERS_WRITE", "CUSTOMERS_READ", "GIFTCARDS_READ", "GIFTCARDS_WRITE"},
+			Scopes:       []string{"CUSTOMERS_WRITE", "CUSTOMERS_READ", "GIFTCARDS_READ", "GIFTCARDS_WRITE", "HELLO"},
 			Endpoint: oauth2.Endpoint{
 				AuthURL:  SQUARE_OAUTH_AUTH_URL,
 				TokenURL: SQUARE_OAUTH_TOKEN_URL,
